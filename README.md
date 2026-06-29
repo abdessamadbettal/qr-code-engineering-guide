@@ -11,16 +11,30 @@ Invented in 1994 by Denso Wave, QR codes have evolved from automotive tracking t
 
 ## 📑 Table of Contents
 
-- [What is a QR Code?](#-what-is-a-qr-code)
-- [Anatomy of a QR Code](#%EF%B8%8F-anatomy-of-a-qr-code)
-- [QR Code Versions & Sizes](#%EF%B8%8F-qr-code-versions--sizes)
-- [Data Encoding Modes](#-data-encoding-modes)
-- [Reed-Solomon Error Correction](#%EF%B8%8F-reed-solomon-error-correction)
-- [The 5-Step Generation Process](#-the-5-step-generation-process)
-- [Best Practices for Developers](#%EF%B8%8F-best-practices-for-developers)
-- [Popular Open-Source Libraries](#-popular-open-source-libraries)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [📱 The Ultimate QR Code Engineering Guide](#-the-ultimate-qr-code-engineering-guide)
+  - [📑 Table of Contents](#-table-of-contents)
+  - [🔍 What is a QR Code?](#-what-is-a-qr-code)
+  - [🗺️ Anatomy of a QR Code](#️-anatomy-of-a-qr-code)
+  - [⚙️ QR Code Versions \& Sizes](#️-qr-code-versions--sizes)
+  - [🔤 Data Encoding Modes](#-data-encoding-modes)
+  - [🛠️ Reed-Solomon Error Correction](#️-reed-solomon-error-correction)
+  - [🚀 The 5-Step Generation Process](#-the-5-step-generation-process)
+    - [1. Data Analysis \& Encoding](#1-data-analysis--encoding)
+    - [2. Error Correction Coding](#2-error-correction-coding)
+    - [3. Layout Structure](#3-layout-structure)
+    - [4. Masking Optimization](#4-masking-optimization)
+    - [5. Final Formatting](#5-final-formatting)
+  - [⚠️ Best Practices for Developers](#️-best-practices-for-developers)
+  - [💻 Reference Implementation: QrFast.io](#-reference-implementation-qrfastio)
+    - [Technical Features](#technical-features)
+    - [Application Stack](#application-stack)
+    - [Data Handling](#data-handling)
+  - [🗃️ Popular Open-Source Libraries](#️-popular-open-source-libraries)
+    - [Python](#python)
+    - [JavaScript / TypeScript](#javascript--typescript)
+    - [Go](#go)
+  - [🤝 Contributing](#-contributing)
+  - [📄 License](#-license)
 
 ---
 
@@ -133,6 +147,29 @@ The selected mask number and chosen error correction tier metadata are written o
 * **Maintain High Contrast:** Scanners read the reflectivity difference between modules. Always stick to a high-contrast dark foreground and light background. Inverse color codes can struggle with low-end readers.
 * **Respect the Quiet Zone:** Ensure your layout UI handles the white outer margin correctly. Clipping the quiet zone to squeeze a code into a layout boundary is the #1 cause of scanning failure.
 * **Keep URLs Compact:** Large text data produces highly dense, fragile grids that are harder for mobile cameras to parse instantly. Shorten your payload strings or use dynamic redirect links to ensure clean, low-version QR grids.
+
+---
+
+## 💻 Reference Implementation: QrFast.io
+
+An example of the QR code generation principles discussed in this guide can be seen in **[QrFast.io](https://qrfast.io)**. 
+
+It serves as a practical demonstration of how to handle multiple data encoding modes, live matrix rendering, and error correction layers in a production web environment.
+
+### Technical Features
+* **Stateless Architecture:** The application operates without user accounts, login states, or database persistence for the generated codes. 
+* **Real-time Matrix Rendering:** The frontend dynamically regenerates the QR matrix payload as input variables (text, WiFi SSID, vCard parameters) are modified by the user.
+* **Data Encoding Support:** Maps inputs to standard QR payloads for 11 distinct content types: `URL`, `Plain Text`, `Email`, `Phone`, `SMS`, `vCard`, `WiFi`, `Location`, `WhatsApp`, `Event`, and `Bitcoin`.
+* **Matrix Manipulation:** Demonstrates programmatic adjustment of finder patterns, module shapes (square vs. rounded), and quiet zone styling while preserving read-accuracy.
+* **Export Pipeline:** Renders final matrices into `PNG`, `SVG`, `JPEG`, and `WEBP` formats based on user selection.
+
+### Application Stack
+The implementation utilizes the following architecture:
+* **Frontend:** Vue.js, Inertia.js, Tailwind CSS, Iconify
+* **Backend:** Laravel, PHP (utilized strictly for application state and routing, not QR data storage)
+
+### Data Handling
+The application processes payload data purely for generation. It does not store user inputs, track scan analytics, or maintain histories of generated QR codes. Site monetization relies on standard Google AdSense integration rather than premium data features.
 
 ---
 
